@@ -1,6 +1,5 @@
 
-import { createWorker, Worker, RecognizeResult } from 'tesseract.js';
-import cv from 'opencv.js';
+import { Worker, RecognizeResult } from 'tesseract.js';
 
 export interface PlateResult {
   text: string;
@@ -20,7 +19,7 @@ class AlprService {
 
   async initialize(): Promise<void> {
     if (!this.worker) {
-      this.worker = await createWorker({
+      this.worker = await (await import('tesseract.js')).createWorker({
         logger: m => console.log(m)
       });
       await this.worker.loadLanguage('eng');
@@ -37,7 +36,15 @@ class AlprService {
       await this.initialize();
     }
 
+    // Make sure OpenCV is available from the global scope
+    if (typeof window.cv === 'undefined') {
+      throw new Error('OpenCV.js is not loaded. Please ensure the library is properly loaded before using this service.');
+    }
+
     try {
+      // Use window.cv instead of imported cv
+      const cv = window.cv;
+      
       // Load image into OpenCV
       const imgElement = await this.fileToImage(imageFile);
       const src = cv.imread(imgElement);

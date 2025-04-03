@@ -38,6 +38,7 @@ declare namespace cv {
 interface Window {
   cv: typeof cv;
   Module: {
-    onRuntimeInitialized: () => void;
+    onRuntimeInitialized?: () => void;
+    [key: string]: any;
   };
 }

@@ -18,13 +18,14 @@ const OpenCvLoader: React.FC<OpenCvLoaderProps> = ({ onLoaded }) => {
       return;
     }
 
+    // Create Module object before the script loads
+    window.Module = window.Module || {};
+    
     // Setup the callback function when OpenCV.js is ready
-    window.Module = {
-      onRuntimeInitialized: () => {
-        console.log('OpenCV.js loaded');
-        setLoading(false);
-        onLoaded();
-      }
+    window.Module.onRuntimeInitialized = () => {
+      console.log('OpenCV.js loaded');
+      setLoading(false);
+      onLoaded();
     };
 
     // Load OpenCV.js script
