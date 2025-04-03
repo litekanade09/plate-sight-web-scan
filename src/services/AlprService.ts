@@ -1,5 +1,5 @@
 
-import { createWorker } from 'tesseract.js';
+import { createWorker, Worker, RecognizeResult } from 'tesseract.js';
 import cv from 'opencv.js';
 
 export interface PlateResult {
@@ -15,7 +15,7 @@ export interface PlateResult {
 }
 
 class AlprService {
-  private worker: Tesseract.Worker | null = null;
+  private worker: Worker | null = null;
   private isWorkerReady = false;
 
   async initialize(): Promise<void> {
