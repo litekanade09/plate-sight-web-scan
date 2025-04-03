@@ -1,3 +1,4 @@
+
 import { useState, useCallback, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -287,7 +288,7 @@ const AlprApp = () => {
           </div>
         )}
         
-        <SheetContent size="xl">
+        <SheetContent className="sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
           <ActivityLog 
             activities={activityLog}
             onClearLog={handleClearLog}
